@@ -7,8 +7,6 @@ landmarkID="" #What landmark will we be representing?
 timeBetweenBroadcasts=100 #How long to wait (in MS) between broadcasts. Decreasing this number will make the system more responsive at the expense of battery life
 numberOfLandmarks=6 #How many different landmarks does the root contain?
 
-radio.on()
-
 def selectBroadcastPower():
  display.clear()
  i=0
@@ -25,30 +23,31 @@ def selectBroadcastPower():
 
 def selectLandmark():
  display.clear()
- print("Select a landmark:\n1")
- i=1
+ print("Select a landmark:\n0")
+ i=0
  while True:
   display.show(str(i), delay=100, wait=False)
   if button_b.was_pressed(): return i
   if button_a.was_pressed():
    i=i+1
-   if i > numberOfLandmarks: i=1
+   if i > numberOfLandmarks-1: i=0
    display.clear()
    print(i)
 
-def startBroadcasting(broadcastPower :int, objectID :int):
+def startBroadcasting(broadcastPower, landmarkID):
  random.seed(running_time())
- uniqueID=str(random.randint(1000,9999))
- stringToSend=str(uniqueID)+":"+str(objectID+1) #Do the +1 because the receiver starts at 1
- messageToPrint="I am broadcasting "+objectIDs[objectID]+", at a power level of "+str(broadcastPower)+", with a unique ID of "+str(uniqueID)+"."
+ uniqueID=str(random.randint(4999,9999)) #Was previously 1000,9999 but weird issue where it was bias towards 1000 todo does this still happen?
+ stringToSend=str(uniqueID)+":"+str(landmarkID) 
+ messageToPrint="I am broadcasting "+str(landmarkID)+", at a power level of "+str(broadcastPower)+", with a unique ID of "+str(uniqueID)+"."
  print(messageToPrint)
  display.scroll(messageToPrint, delay=100, wait=True)
- sleep(timeBetweenBroadcasts)
+ sleep(1000)
  display.clear()
- radio.config(power=broadcastPower, length=16)
+ radio.on()
+ radio.config(power=broadcastPower, length=8)
  while True:
   radio.send(stringToSend)
-  sleep(750)
+  sleep(timeBetweenBroadcasts)
 
 
 button_a.was_pressed()
