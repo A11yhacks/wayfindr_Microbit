@@ -1,14 +1,12 @@
 from microbit import *
 import radio
 import random
+
 broadcastPower=""
-objectID=""
 timeBetweenBroadcasts=100 #How long to wait (in MS) between broadcasts. Decreasing this number will make the system more responsive at the expense of battery life
+numberOfLandmarks=6 #How many different landmarks does the root contain?
 
 radio.on()
-
-objectIDs=["Forward", "Up stairs", "door", "Left", "right", "Destination reached"
-]
 
 def selectBroadcastPower():
  display.clear()
@@ -24,20 +22,20 @@ def selectBroadcastPower():
    display.clear()
    print("Showing %i" % i)
 
-def selectObjectID():
+def selectLandmark():
  display.clear()
+ print("Select a landmark:\n0")
  i=0
  button_a.was_pressed()
  button_b.was_pressed()
  while True:
- j=i+1
-  display.show(str(j), delay=100, wait=False)
+  display.show(str(i), delay=100, wait=False)
   if button_b.was_pressed(): return i
   if button_a.was_pressed():
    i=i+1
-   if i > 5: i=0
+   if i > numberOfLandmarks: i=0
    display.clear()
-   print("Showing %i" % int(i+1))
+   print(i)
 
 def startBroadcasting(broadcastPower :int, objectID :int):
  random.seed(running_time())
@@ -64,10 +62,10 @@ while True:
    print("Select broadcast power")
    broadcastPower=selectBroadcastPower()
  display.clear()
- display.scroll("Select the object that I should represent using button a then press b to continue", delay=100, wait=False)
- while objectID == "":
+ display.scroll("Select the landmark that I should represent using button a then press b to continue", delay=100, wait=False)
+ while landmarkID == "":
   if button_a.was_pressed():
-   print("Select object")
-   objectID=selectObjectID()
+   print("Select landmark")
+   landmarkID=selectObjectID()
  display.clear()
- startBroadcasting(broadcastPower, objectID)
+ startBroadcasting(broadcastPower, landmarkID)
