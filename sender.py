@@ -3,6 +3,8 @@ import radio
 import random
 broadcastPower=""
 objectID=""
+timeBetweenBroadcasts=100 #How long to wait (in MS) between broadcasts. Decreasing this number will make the system more responsive at the expense of battery life
+
 radio.on()
 
 objectIDs=["Forward", "Up stairs", "door", "Left", "right", "Destination reached"
@@ -44,7 +46,7 @@ def startBroadcasting(broadcastPower :int, objectID :int):
  messageToPrint="I am broadcasting "+objectIDs[objectID]+", at a power level of "+str(broadcastPower)+", with a unique ID of "+str(uniqueID)+"."
  print(messageToPrint)
  display.scroll(messageToPrint, delay=100, wait=True)
- sleep(750)
+ sleep(timeBetweenBroadcasts)
  display.clear()
  radio.config(power=broadcastPower, length=16)
  while True:
