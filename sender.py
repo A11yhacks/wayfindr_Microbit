@@ -10,6 +10,7 @@ numberOfLandmarks=6 #How many different landmarks does the root contain?
 def selectBroadcastPower():
  display.clear()
  i=0
+ print(i)
  button_a.was_pressed()
  button_b.was_pressed()
  while True:
@@ -19,12 +20,12 @@ def selectBroadcastPower():
    i=i+1
    if i > 7: i=0
    display.clear()
-   print("Showing %i" % i)
+   print(i)
 
 def selectLandmark():
  display.clear()
- print("Select a landmark:\n0")
  i=0
+ print(i)
  while True:
   display.show(str(i), delay=100, wait=False)
   if button_b.was_pressed(): return i
@@ -49,21 +50,18 @@ def startBroadcasting(broadcastPower, landmarkID):
   radio.send(stringToSend)
   sleep(timeBetweenBroadcasts)
 
-
-button_a.was_pressed()
-button_b.was_pressed()
-print("In main")
-while True:
- display.scroll("Select my broadcast power using button a then press b to continue.", delay=100, wait=False)
- while broadcastPower == "":
-  if button_a.was_pressed():
-   print("Select broadcast power")
-   broadcastPower=selectBroadcastPower()
- display.clear()
- display.scroll("Select the landmark that I should represent using button a then press b to continue", delay=100, wait=False)
- while landmarkID == "":
-  if button_a.was_pressed():
-   print("Select landmark")
-   landmarkID=selectLandmark()
- display.clear()
- startBroadcasting(broadcastPower, landmarkID)
+message="Select my broadcast power using button a then press b to continue."
+display.scroll(message, delay=100, wait=False)
+print(message)
+while broadcastPower == "":
+ if button_a.was_pressed():
+  broadcastPower=selectBroadcastPower()
+display.clear()
+message="Select the landmark that I should represent using button a then press b to continue."
+display.scroll(message, delay=100, wait=False)
+print(message)
+while landmarkID == "":
+ if button_a.was_pressed():
+  landmarkID=selectLandmark()
+display.clear()
+startBroadcasting(broadcastPower, landmarkID)
