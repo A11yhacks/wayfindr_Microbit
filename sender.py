@@ -3,6 +3,7 @@ import radio
 import random
 
 broadcastPower=""
+landmarkID="" #What landmark will we be representing?
 timeBetweenBroadcasts=100 #How long to wait (in MS) between broadcasts. Decreasing this number will make the system more responsive at the expense of battery life
 numberOfLandmarks=6 #How many different landmarks does the root contain?
 
@@ -24,16 +25,14 @@ def selectBroadcastPower():
 
 def selectLandmark():
  display.clear()
- print("Select a landmark:\n0")
+ print("Select a landmark:\n1")
  i=1
- button_a.was_pressed()
- button_b.was_pressed()
  while True:
   display.show(str(i), delay=100, wait=False)
   if button_b.was_pressed(): return i
   if button_a.was_pressed():
    i=i+1
-   if i > numberOfLandmarks: i=0
+   if i > numberOfLandmarks: i=1
    display.clear()
    print(i)
 
@@ -66,6 +65,6 @@ while True:
  while landmarkID == "":
   if button_a.was_pressed():
    print("Select landmark")
-   landmarkID=selectObjectID()
+   landmarkID=selectLandmark()
  display.clear()
  startBroadcasting(broadcastPower, landmarkID)
