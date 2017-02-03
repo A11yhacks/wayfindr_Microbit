@@ -25,7 +25,7 @@ def selectBroadcastPower():
 def selectLandmark():
  display.clear()
  print("Select a landmark:\n0")
- i=0
+ i=1
  button_a.was_pressed()
  button_b.was_pressed()
  while True:
