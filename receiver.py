@@ -4,7 +4,7 @@ import music
 import radio
 import speech
 
-previouslyReceivedUniqueID=None
+previouslyReceivedUniqueID=None #We need to keep track of the last micro:bit that we received a packet from so that we don't keep on announcing it while it's in range
 
 #Sing the before instruction sound and then speak the given phrase. If we're at the end of the root sing the destination sound
 def announce(phrase, destinationReached=0):
@@ -23,15 +23,16 @@ def announce(phrase, destinationReached=0):
 
 radio.on()
 print("Listening...")
+
 while True:
  packet=radio.receive()
- if packet != None: #Make sure we've received something
+ if packet != None: #Make sure we've received something - E.G. there might not be another micro:bit in range
   #Separate the 2 pieces of data in the received packet
   landmarkID=int(packet[5:])
   uniqueID=int(packet[:4])
-  if uniqueID != previouslyReceivedUniqueID: #Make sure that what we've received is different to the last time we were here
+  if uniqueID != previouslyReceivedUniqueID: #Make sure that what we've received isn't the same as the last thing we received
    previouslyReceivedUniqueID = uniqueID
-   #See if what we've received is something we know about.
+   #Speak something depending on which landmarkID we've received
    print(packet)
    if landmarkID == 0: announce("Walk forw ud.")
    if landmarkID == 1: announce("Go up the stairs.")
