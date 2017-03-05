@@ -2,37 +2,29 @@ from microbit import *
 import radio
 import random
 
-broadcastPower=""
-landmarkID="" #What landmark will we be representing?
 timeBetweenBroadcasts=100 #How long to wait (in MS) between broadcasts. Decreasing this number will make the system more responsive at the expense of battery life
 numberOfLandmarks=6 #How many different landmarks does the root contain?
 
 def selectBroadcastPower():
- display.clear()
  i=0
  print(i)
- button_a.was_pressed()
- button_b.was_pressed()
  while True:
   display.show(str(i), wait=False)
   if button_b.was_pressed(): return i
   if button_a.was_pressed():
-   i=i+1
-   if i > 7: i=0
-   display.clear()
+   i+=1
+   if i > 7: i=0 #8 (0-7) different levels of broadcast power to choose from
    print(i)
 
 def selectLandmark():
- display.clear()
  i=0
  print(i)
  while True:
   display.show(str(i), delay=100, wait=False)
   if button_b.was_pressed(): return i
   if button_a.was_pressed():
-   i=i+1
+   i+=1
    if i > numberOfLandmarks-1: i=0
-   display.clear()
    print(i)
 
 def startBroadcasting(broadcastPower, landmarkID):
@@ -53,15 +45,16 @@ def startBroadcasting(broadcastPower, landmarkID):
 message="Select my broadcast power using button a then press b to continue."
 display.scroll(message, delay=100, wait=False)
 print(message)
-while broadcastPower == "":
+while True:
  if button_a.was_pressed():
   broadcastPower=selectBroadcastPower()
-display.clear()
+  break
 message="Select the landmark that I should represent using button a then press b to continue."
 display.scroll(message, delay=100, wait=False)
 print(message)
-while landmarkID == "":
+while True:
  if button_a.was_pressed():
   landmarkID=selectLandmark()
-display.clear()
+  break
+
 startBroadcasting(broadcastPower, landmarkID)
