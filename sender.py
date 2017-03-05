@@ -37,7 +37,7 @@ def startBroadcasting(broadcastPower, landmarkID):
  sleep(1000)
  display.clear()
  radio.on()
- radio.config(power=broadcastPower, length=8)
+ radio.config(power=broadcastPower, length=32)
  while True:
   radio.send(stringToSend)
   sleep(timeBetweenBroadcasts)
